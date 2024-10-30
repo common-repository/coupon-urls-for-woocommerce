@@ -1,0 +1,43 @@
+<?php
+
+namespace CouponURLs\Original\Language\Classes;
+
+use CouponURLs\Original\Characters\StringManager;
+use CouponURLs\Original\Collections\Collection;
+class Property
+{
+    private $name;
+    private $type;
+    public function __construct(string $name, string $type = '', string $visibility = '')
+    {
+        $this->name = $name;
+        $this->type = $type;
+        $this->visibility = $visibility;
+    }
+    public function getShortType() : string
+    {
+        if ($this->type === 'collection') {
+            return 'Collection';
+        }
+        return StringManager::create($this->type)->explode('\\')->last() ?? '';
+    }
+    public function getLongType() : string
+    {
+        if ($this->type === 'collection') {
+            return Collection::class;
+        }
+        return $this->type;
+    }
+    public function isTyped() : bool
+    {
+        return (bool) $this->type;
+    }
+    public function getName() : string
+    {
+        return $this->name;
+    }
+    public function getVisibility() : string
+    {
+        return $this->visibility;
+    }
+}
